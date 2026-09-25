@@ -47,3 +47,5 @@ export const STAGES = [
   { value: "ganado", label: "Ganado" },
   { value: "perdido", label: "Perdido" },
 ] as const;
+
+export type Stage = (typeof STAGES)[number]["value"];
