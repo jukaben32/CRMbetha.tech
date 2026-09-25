@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { STAGES } from "@/lib/leads/query";
 import { toWhatsAppLink } from "@/lib/leads/whatsapp";
 import { NoteForm } from "./NoteForm";
+import { TaskList } from "./TaskList";
 
 const STAGE_LABEL = Object.fromEntries(STAGES.map((s) => [s.value, s.label]));
 
@@ -15,7 +16,7 @@ export default async function LeadDetailPage({
   const { id } = await params;
   const supabase = await createClient();
 
-  const [{ data: lead }, { data: notes }] = await Promise.all([
+  const [{ data: lead }, { data: notes }, { data: tasks }] = await Promise.all([
     supabase
       .from("leads")
       .select(
@@ -28,6 +29,12 @@ export default async function LeadDetailPage({
       .select("id, body, created_at")
       .eq("lead_id", id)
       .order("created_at", { ascending: false }),
+    supabase
+      .from("tasks")
+      .select("id, title, due_at, done")
+      .eq("lead_id", id)
+      .order("done", { ascending: true })
+      .order("due_at", { ascending: true, nullsFirst: false }),
   ]);
 
   if (!lead) {
@@ -108,6 +115,13 @@ export default async function LeadDetailPage({
             </div>
           )}
         </dl>
+      </div>
+
+      <div className="glass-card p-6">
+        <h2 className="text-sm font-semibold tracking-tight">Tareas</h2>
+        <div className="mt-4">
+          <TaskList leadId={lead.id} initialTasks={tasks ?? []} />
+        </div>
       </div>
 
       <div className="glass-card p-6">

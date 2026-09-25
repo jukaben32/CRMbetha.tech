@@ -29,8 +29,9 @@ export async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const PUBLIC_API_PATHS = new Set(["/api/leads", "/api/cron/tasks-digest"]);
   const isLoginPage = request.nextUrl.pathname.startsWith("/login");
-  const isPublicApi = request.nextUrl.pathname === "/api/leads";
+  const isPublicApi = PUBLIC_API_PATHS.has(request.nextUrl.pathname);
 
   if (!user && !isLoginPage && !isPublicApi) {
     const url = request.nextUrl.clone();
