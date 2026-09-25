@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "./actions";
 
@@ -14,7 +15,14 @@ export default async function PanelLayout({
   return (
     <div className="relative z-10 flex min-h-screen flex-col">
       <header className="flex items-center justify-between border-b border-surface-border px-6 py-4">
-        <span className="text-sm font-semibold tracking-tight">CRM Agencia</span>
+        <div className="flex items-center gap-6">
+          <span className="text-sm font-semibold tracking-tight">CRM Agencia</span>
+          <nav className="flex items-center gap-4 text-sm text-muted">
+            <Link href="/leads" className="transition hover:text-foreground">
+              Leads
+            </Link>
+          </nav>
+        </div>
         <div className="flex items-center gap-4">
           <span className="text-sm text-muted">{user?.email}</span>
           <form action={signOut}>
