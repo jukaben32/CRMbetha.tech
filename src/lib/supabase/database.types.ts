@@ -50,6 +50,7 @@ export type Database = {
           email: string | null
           fbclid: string | null
           id: string
+          ip: string | null
           landing_url: string | null
           message: string | null
           name: string
@@ -67,6 +68,7 @@ export type Database = {
           email?: string | null
           fbclid?: string | null
           id?: string
+          ip?: string | null
           landing_url?: string | null
           message?: string | null
           name: string
@@ -84,6 +86,7 @@ export type Database = {
           email?: string | null
           fbclid?: string | null
           id?: string
+          ip?: string | null
           landing_url?: string | null
           message?: string | null
           name?: string
