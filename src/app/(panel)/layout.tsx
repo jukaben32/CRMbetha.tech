@@ -24,6 +24,9 @@ export default async function PanelLayout({
             <Link href="/kanban" className="transition hover:text-foreground">
               Kanban
             </Link>
+            <Link href="/dashboard" className="transition hover:text-foreground">
+              Dashboard
+            </Link>
           </nav>
         </div>
         <div className="flex items-center gap-4">
